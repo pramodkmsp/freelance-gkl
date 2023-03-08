@@ -1,18 +1,35 @@
 <div class="card col-md-5 d-flex mx-auto mt-5">
-    <div class="card-header bg-success text-white">
-      <h4 class="p-0 m-0">Login</h4>
-    </div>
-    <div class="card-body">
-        <div class="mb-3">
-            <label for="username" class="form-label"><strong>Username </strong><sup class="text-danger fs-5">*</sup></label>
-            <input type="email" class="form-control" name="username" placeholder="Enter your email" autocomplete="off" autofocus>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label"><strong>Password </strong><sup class="text-danger fs-5">*</sup></label>
-            <input type="password" class="form-control" name="password" placeholder="Enter your password">
-        </div>
-    </div>
-    <div class="card-footer">
-      <button type="submit" class="btn btn-success">Login</button>
-    </div>
+  <div class="card-header bg-success text-white">
+    <h4 class="p-0 m-0">Login</h4>
   </div>
+  <div class="card-body">
+    <form [formGroup]="loginForm">
+    <div class="mb-3">
+      <label for="username" class="form-label"><strong>Username </strong><sup class="text-danger fs-5">*</sup></label>
+      <input type="text" formControlName="username" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
+      <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+        <div *ngIf="f['username'].errors['required']">Username is required</div>
+        <div *ngIf="f['username'].errors['email']">Username should be valid email address</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label"><strong>Password </strong><sup class="text-danger fs-5">*</sup></label>
+      <input type="password" formControlName="password" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+      <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+        <div *ngIf="f['password'].errors['required']">Password is required</div>
+        <div *ngIf="f['password'].errors['minlength']">
+          Password must be at least 6 characters
+        </div>
+        <div *ngIf="f['password'].errors['maxlength']">
+          Password must not exceed 40 characters
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+  <div class="card-footer">
+    <button type="submit" class="btn btn-success" (click)="onSubmit()">Login</button>
+  </div>
+</div>
