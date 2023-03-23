@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { EditContactComponent } from './edit-contact/edit-contact.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
     DashboardComponent,
     HeaderComponent,
     ContactsComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    EditContactComponent
   ],
   imports: [
     BrowserModule,

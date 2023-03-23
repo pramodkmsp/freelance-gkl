@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contacts',
@@ -10,7 +11,7 @@ export class ContactsComponent implements OnInit {
   searchText: string = '';
   contacts: any[] = [];
   userInfo: any;
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
@@ -47,6 +48,10 @@ export class ContactsComponent implements OnInit {
     this.contactList.splice(index, 1);
     // this.contacts.splice(index, 1);
     localStorage.setItem('contacts', JSON.stringify(this.contacts));
+  }
+
+  editContact(contact: any) {
+    this.router.navigate(['edit-contact'], {queryParams: contact});
   }
 
 }
