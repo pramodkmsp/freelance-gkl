@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,
+    private dataService: DataService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -31,14 +33,43 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    console.log(JSON.stringify(this.loginForm.value, null, 2));
-    localStorage.setItem('userInfo', JSON.stringify({
-      "username": "admin@gmail.com",
-      "password": "admin",
-      "userType": "admin"
-    }))
-    this.submitted = false;
-    this.loginForm.reset();
-    this.router.navigate(['dashboard']);
+    if(this.loginForm && this.loginForm.value && this.loginForm.value?.username == 'admin@gmail.com' && this.loginForm.value?.password == 'admin123') {
+      let userInfo = {
+        username: this.loginForm.value?.username,
+        userType: 'admin'
+      }
+      localStorage.setItem('userInfo', JSON.stringify(userInfo))
+      this.dataService.setUserInfo(userInfo);
+      this.submitted = false;
+      this.loginForm.reset();
+      this.router.navigate(['dashboard']);
+    } else if(this.loginForm && this.loginForm.value) {
+      let contacts: any = localStorage.getItem('contacts');
+      if(contacts) {
+        contacts = JSON.parse(contacts);
+
+        if(contacts && contacts?.length > 0) {
+          let isUserMatched: boolean = false;
+          let userInfo = '';
+          for (let i = 0; i < contacts.length; i++) {
+            if(contacts[i] && contacts[i]?.email?.toLowerCase() === this.loginForm.value?.username?.toLowerCase() && contacts[i]?.password === this.loginForm.value?.password) {
+              isUserMatched = true;
+              userInfo = contacts[i];
+              break;
+            }
+          }
+
+          if(isUserMatched) {
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+            this.dataService.setUserInfo(userInfo);
+            this.submitted = false;
+            this.loginForm.reset();
+            this.router.navigate(['dashboard']);
+          }
+        } else {
+          console.error("User doesn't exist");
+        }
+      }
+    }
   }
 }

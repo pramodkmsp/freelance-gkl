@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit{
   title = 'freelance';
   userInfo: any;
+
+  constructor(private dataService: DataService) {}
   ngOnInit(): void {
-    let userInfo = localStorage.getItem('userInfo');
-    if (userInfo) {
-      this.userInfo = JSON.parse(userInfo);
-    }
+    this.dataService.userInfo.subscribe((userInfo: any) => {
+      this.userInfo = userInfo;
+    })
   }
 }

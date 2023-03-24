@@ -41,7 +41,18 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    let contacts: any = localStorage.getItem('contacts');
+    if(contacts) {
+      contacts = JSON.parse(contacts);
+      if(contacts && contacts?.length > 0) {
+        contacts = [...contacts, {...this.registerForm.value, userType: 'user', approved: false}];
+        localStorage.setItem('contacts', JSON.stringify(contacts))
+      }
+    } else {
+      localStorage.setItem('contacts', JSON.stringify([{...this.registerForm.value, userType: 'user', approved: false}]))
+    }
     console.log(JSON.stringify(this.registerForm.value, null, 2));
+    this.onReset();
   }
 
   onReset(): void {

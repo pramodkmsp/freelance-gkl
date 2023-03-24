@@ -19,7 +19,7 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Gender</th>
-                <th *ngIf="userInfo?.userType === 'admin'">Action</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -30,10 +30,10 @@
                 <td>{{contact?.email}}</td>
                 <td>{{contact?.mobile}}</td>
                 <td>{{contact?.gender}}</td>
-                <td *ngIf="userInfo?.userType === 'admin'">
-                    <button class="btn btn-warning" *ngIf="!contact?.approved">Edit</button>
-                    <button class="btn btn-danger mx-2" (click)="deleteContact(i)" *ngIf="!contact?.approved">Delete</button>
-                    <button class="btn" (click)="approvedContact(i)" [disabled]="contact.approved" [ngClass]="contact.approved ? 'btn-success': 'btn-primary'">{{contact.approved ? 'Approved' : 'Approve'}}</button>
+                <td>
+                    <button class="btn btn-warning" *ngIf="!contact?.approved && userInfo?.userType === 'admin'">Edit</button>
+                    <button class="btn btn-danger mx-2" (click)="deleteContact(i)" *ngIf="!contact?.approved && userInfo?.userType === 'admin'">Delete</button>
+                    <button class="btn" (click)="approvedContact(i)" [disabled]="contact.approved || userInfo?.userType != 'admin'" [ngClass]="contact.approved ? 'btn-success': 'btn-primary'">{{contact.approved ? 'Approved' : 'Approve'}}</button>
                 </td>
             </tr>
         </tbody>

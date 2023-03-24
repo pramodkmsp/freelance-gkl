@@ -77,8 +77,9 @@
       </div>
     </form>
   </div>
-  <div class="card-footer">
+  <div class="card-footer footer">
+    <label class="login-text">Already have an account? <a [routerLink]="['/login']" > Click here to login</a></label>
     <button type="submit" class="btn btn-success mx-2" (click)="onSubmit()">Register</button>
-    <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+    <!-- <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button> -->
   </div>
 </div>
