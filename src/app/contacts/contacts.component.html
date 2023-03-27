@@ -1,0 +1,41 @@
+<div class="p-2">
+    <div class="d-flex">
+        <div class="form-group col-4">
+            <input type="text" [(ngModel)]="searchText" class="form-control" id="search" placeholder="Type here to search...">
+        </div>
+        <label class="switch mx-2">
+            <input type="checkbox" (change)="toggleApprove($event)">
+            <span class="slider round"></span>
+        </label>
+        <label class="my-1">Approve</label>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Gender</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let contact of contactList | searchFilter: searchText; let i = index;">
+                <th scope="row">{{i + 1}}</th>
+                <td>{{contact?.firstName}}</td>
+                <td>{{contact?.lastName}}</td>
+                <td>{{contact?.email}}</td>
+                <td>{{contact?.mobile}}</td>
+                <td>{{contact?.gender}}</td>
+                <td>
+                    <button class="btn btn-warning" (click)="editContact(contact)" *ngIf="!contact?.approved && userInfo?.userType !== 'admin'">Edit</button>
+                    <button class="btn btn-danger mx-2" (click)="deleteContact(i)" *ngIf="!contact?.approved && userInfo?.userType !== 'admin'">Delete</button>
+                    <button class="btn" (click)="approvedContact(i)" [disabled]="contact.approved || userInfo?.userType != 'admin'" [ngClass]="contact.approved ? 'btn-success': 'btn-primary'">{{contact.approved ? 'Approved' : 'Approve'}}</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        password: ['',[Validators.required,Validators.minLength(6),Validators.maxLength(40)]],
+        password: ['',[Validators.required,Validators.minLength(5),Validators.maxLength(40)]],
         confirmPassword: ['', Validators.required],
         mobile: ['', Validators.required],
         gender: ['male'],
@@ -41,7 +41,18 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    let contacts: any = localStorage.getItem('contacts');
+    if(contacts) {
+      contacts = JSON.parse(contacts);
+      if(contacts && contacts?.length > 0) {
+        contacts = [...contacts, {...this.registerForm.value, userType: 'user', approved: false}];
+        localStorage.setItem('contacts', JSON.stringify(contacts))
+      }
+    } else {
+      localStorage.setItem('contacts', JSON.stringify([{...this.registerForm.value, userType: 'user', approved: false}]))
+    }
     console.log(JSON.stringify(this.registerForm.value, null, 2));
+    this.onReset();
   }
 
   onReset(): void {

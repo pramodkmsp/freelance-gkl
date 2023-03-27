@@ -1,0 +1,46 @@
+<div class="card col-md-5 d-flex mx-auto mt-5">
+    <div class="card-header bg-success text-white">
+      <h4 class="p-0 m-0">Update Contact</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="editContactForm">
+        <div class="mb-3">
+          <label for="firstName" class="form-label"><strong>First Name </strong><sup
+              class="text-danger fs-5">*</sup></label>
+          <input type="text" formControlName="firstName" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
+          <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+            <div *ngIf="f['firstName'].errors['required']">First Name is required</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label"><strong>Last Name </strong><sup
+              class="text-danger fs-5">*</sup></label>
+          <input type="text" formControlName="lastName" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" />
+          <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+            <div *ngIf="f['lastName'].errors['required']">Lastname is required</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="mobile" class="form-label"><strong>Mobile </strong><sup class="text-danger fs-5">*</sup></label>
+          <input type="text" formControlName="mobile" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['mobile'].errors }" />
+          <div *ngIf="submitted && f['mobile'].errors" class="invalid-feedback">
+            <div *ngIf="f['mobile'].errors['required']">Mobile is required</div>
+          </div>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" formControlName="gender" type="radio" value="male" checked>
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" formControlName="gender" type="radio" value="female">
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer footer">
+      <button type="submit" class="btn btn-success mx-2" (click)="onSubmit()">Update</button>
+    </div>
+  </div>
